@@ -8,6 +8,7 @@ export default defineConfig({
         emptyOutDir: true
     },
     plugins: [react()],
+    root: '.',
     server: {
         host: '0.0.0.0',
         port: 5001,
