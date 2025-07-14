@@ -35,6 +35,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - run: dotnet publish backend/WebApplication1 -c Release -o ./publish
 
+      - name: Start web app
+        run : .publish/WebApplication1
       # Runs a single command using the runners shell
       # - name: Run a one-line script
       #   run: echo ${{ secrets.PS }} | sudo -S reboot
