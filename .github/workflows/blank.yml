@@ -47,6 +47,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       
+      - name: List project files
+        run: ls -R
       - name: Build for production
         run: npm run build
       - name: List project files
