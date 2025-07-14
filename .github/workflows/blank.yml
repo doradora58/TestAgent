@@ -35,32 +35,25 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v3
 
-      - name: Checkout source
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Node.js のセットアップ
+        uses: actions/setup-node@v3
         with:
-          node-version: '20.x' 
-      
-      - name: Install dependencies
-        run: npm install
-      
-      - name: List project files
-        run: ls -R
-      - name: Build for production
-        run: npm run build
-      - name: List project files
-        run: ls -R
+          node-version: '20'
 
-      - name: Archive production build
-        uses: actions/upload-artifact@v4
-        with:
-          name: vite-react-dist
-          path: ./dist/
-      - name: List project files
-        run: ls -R
+      - name: パッケージインストールとビルド
+        run: |
+          npm ci
+          npm run build
+
+      - name: サーバーへ成果物をアップロード
+        run: |
+          rsync -avz --delete ./build/ user@your-server-ip:/var/www/html/
+        env:
+          RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
+
 
       
       # - name: Start web app
