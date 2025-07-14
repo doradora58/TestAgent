@@ -49,12 +49,17 @@ jobs:
       
       - name: Build for production
         run: npm run build
-      
+      - name: List project files
+        run: ls -R
+
       - name: Archive production build
         uses: actions/upload-artifact@v4
         with:
           name: vite-react-dist
           path: dist/
+      - name: List project files
+        run: ls -R
+
       
       # - name: Start web app
       #   run : ./publish/WebApplication1
