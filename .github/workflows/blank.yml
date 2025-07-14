@@ -33,7 +33,7 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - run: dotnet publish backend/WebApplication1 -c Release -o ./publish
+      - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
       - name: Start web app
         run : ./publish/WebApplication1
