@@ -1,29 +1,31 @@
-var builder = WebApplication.CreateBuilder(args);
+using System.Net;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddCors(options =>
+public class Program
 {
-    options.AddDefaultPolicy(policyBuilder =>
+    public static void Main(string[] args)
     {
-        policyBuilder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-    });
-});
-var app = builder.Build();
+        var localIp = GetLocalIPv4();
+        CreateHostBuilder(args, localIp).Build().Run();
+    }
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public static IHostBuilder CreateHostBuilder(string[] args, string ip) =>
+        Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseUrls($"http://{ip}:5000");
+                webBuilder.UseStartup<Startup>();
+            });
+
+    private static string GetLocalIPv4()
+    {
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                return ip.ToString();
+        }
+        throw new Exception("IPv4 アドレスが見つかりませんでした。");
+    }
 }
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
