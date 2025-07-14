@@ -33,7 +33,7 @@ jobs:
       - name: Display dotnet version
         run: dotnet --version
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/
+      - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
 
       - name: Checkout source
@@ -54,7 +54,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: vite-react-dist
-          path: /home/doradora/app
+          path: /home/doradora/
       
       # - name: Start web app
       #   run : ./publish/WebApplication1
