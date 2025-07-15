@@ -13,29 +13,12 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-# jobs:
-#   # This workflow contains a single job called "build"
-#   build:
-#     # The type of runner that the job will run on
-#     runs-on: self-hosted
-    
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    # steps:
-      # - uses: actions/checkout@v4
-      # - name: Setup .NET 8.x
-      #   uses: actions/setup-dotnet@v4
-      #   with:
-      #     # Semantic version range syntax or exact version of a dotnet version
-      #     dotnet-version: '8.x'
-          
-      # # You can test your matrix by printing the current dotnet version
-      # - name: Display dotnet version
-      #   run: dotnet --version
-      # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
+    # The type of runner that the job will run on
+    # runs-on: self-hosted
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,6 +31,21 @@ jobs:
         with:
           name: react-build
           path: frontend/ReactApp/dist/
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET 8.x
+        uses: actions/setup-dotnet@v4
+        with:
+          # Semantic version range syntax or exact version of a dotnet version
+          dotnet-version: '8.x'
+          
+      # You can test your matrix by printing the current dotnet version
+      - name: Display dotnet version
+        run: dotnet --version
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
+
 
   deploy:
     needs: build
