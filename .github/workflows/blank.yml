@@ -35,11 +35,6 @@ on:
       # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
