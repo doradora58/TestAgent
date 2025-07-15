@@ -37,44 +37,28 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend/reactproject1
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build React app
-        run: npm run build
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v4
+      - run: npm ci
+        working-directory: frontend/reactproject1
+      - run: npm run build
+        working-directory: frontend/reactproject1
+      - run: ls -R frontend/reactproject1/dist
+      - uses: actions/upload-artifact@v4
         with:
           name: react-build
-          path: dist/
+          path: frontend/reactproject1/dist/
 
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: react-build
           path: ./react-artifact
+      - run: sudo cp -r react-artifact/* /var/www/react-app/
 
-      - name: Clean old Nginx content
-        run: sudo rm -rf /var/www/react-app/*
-
-      - name: Copy new build to Nginx
-        run: sudo cp -r react-artifact/* /var/www/react-app/
-
-      - name: Reload Nginx
-        run: sudo systemctl reload nginx
 
 
       
