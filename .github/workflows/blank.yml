@@ -34,26 +34,30 @@ on:
       #   run: dotnet --version
       # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
-
 jobs:
-  deploy:
-    runs-on: self-hosted
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - run: npm ci
+        working-directory: frontend/reactproject1
+      - run: npm run build
+        working-directory: frontend/reactproject1
+      - run: ls -R frontend/reactproject1/dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: frontend/reactproject1/dist/
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build React app
-        run: npm run build
-
-      - name: Copy files to Nginx directory
-        run: |
-          sudo rm -rf /var/www/react-app/*
-          sudo cp -r dist/* /var/www/react-app/
-
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: react-build
+          path: ./react-artifact
+      - run: sudo cp -r react-artifact/* /var/www/react-app/
 
 
 
