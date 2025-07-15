@@ -34,7 +34,6 @@ on:
       #   run: dotnet --version
       # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -76,6 +75,7 @@ jobs:
 
       - name: Reload Nginx
         run: sudo systemctl reload nginx
+
 
       
       # - name: Start web app
