@@ -35,15 +35,17 @@ on:
       # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend/reactproject1
-
-    outputs:
-      artifact-path: ${{ steps.upload.outputs.artifact-path }}
 
     steps:
       - name: Checkout code
@@ -69,22 +71,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: react-build
-          path: ./dist
+          path: ./react-artifact
 
       - name: Clean old Nginx content
         run: sudo rm -rf /var/www/react-app/*
 
       - name: Copy new build to Nginx
-        run: sudo cp -r dist/* /var/www/react-app/
+        run: sudo cp -r react-artifact/* /var/www/react-app/
 
       - name: Reload Nginx
         run: sudo systemctl reload nginx
-
-
-
-
-
-
 
       
       # - name: Start web app
