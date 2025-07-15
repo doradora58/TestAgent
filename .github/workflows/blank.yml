@@ -36,23 +36,28 @@ on:
       # - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build React app
+      - name: Build React app (Vite)
         run: npm run build
 
-      - name: Copy files to Nginx directory
-        run: |
-          sudo rm -rf /var/www/react-app/*
-          sudo cp -r dist/* /var/www/react-app/
+      - name: Clean old Nginx content
+        run: sudo rm -rf /var/www/react-app/*
+
+      - name: Copy new build to Nginx directory
+        run: sudo cp -r dist/* /var/www/react-app/
+
+      - name: Restart Nginx (optional)
+        run: sudo systemctl restart nginx
+
 
 
 
