@@ -57,7 +57,9 @@ jobs:
         with:
           name: react-build
           path: ./react-artifact
-      - run: sudo cp -r react-artifact/* /var/www/react-app/
+      - name: Copy new build to Nginx
+        run: echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S cp -r react-artifact/* /var/www/react-app/
+      
 
 
 
