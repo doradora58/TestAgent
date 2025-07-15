@@ -21,16 +21,6 @@ jobs:
     runs-on: self-hosted
     # runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: npm ci
-        working-directory: frontend/ReactApp
-      - run: npm run build
-        working-directory: frontend/ReactApp
-      - run: ls -R frontend/ReactApp/dist
-      - uses: actions/upload-artifact@v4
-        with:
-          name: react-build
-          path: frontend/ReactApp/dist/
     # Steps represent a sequence of tasks that will be executed as part of the job
       - uses: actions/checkout@v4
       - name: Setup .NET 8.x
@@ -45,6 +35,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
+      
+      - uses: actions/checkout@v4
+      - run: npm ci
+        working-directory: frontend/ReactApp
+      - run: npm run build
+        working-directory: frontend/ReactApp
+      - run: ls -R frontend/ReactApp/dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: frontend/ReactApp/dist/
 
   deploy:
     needs: build
