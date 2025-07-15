@@ -13,46 +13,48 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: self-hosted
+# # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# jobs:
+#   # This workflow contains a single job called "build"
+#   build:
+#     # The type of runner that the job will run on
+#     runs-on: self-hosted
     
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET 8.x
-        uses: actions/setup-dotnet@v4
-        with:
-          # Semantic version range syntax or exact version of a dotnet version
-          dotnet-version: '8.x'
+    # steps:
+      # - uses: actions/checkout@v4
+      # - name: Setup .NET 8.x
+      #   uses: actions/setup-dotnet@v4
+      #   with:
+      #     # Semantic version range syntax or exact version of a dotnet version
+      #     dotnet-version: '8.x'
           
-      # You can test your matrix by printing the current dotnet version
-      - name: Display dotnet version
-        run: dotnet --version
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
+      # # You can test your matrix by printing the current dotnet version
+      # - name: Display dotnet version
+      #   run: dotnet --version
+      # # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # - run: dotnet publish backend/WebApplication1 -c Release -o /home/doradora/app
 
-      - name: リポジトリのチェックアウト
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Node.js のセットアップ
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
+      - name: Install dependencies
+        run: npm install
 
-      - name: パッケージインストールとビルド
-        run: |
-          npm ci
-          npm run build
+      - name: Build React app
+        run: npm run build
 
-      - name: サーバーへ成果物をアップロード
+      - name: Copy files to Nginx directory
         run: |
-          rsync -avz --delete ./build/ user@your-server-ip:/var/www/html/
-        env:
-          RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD }}
+          sudo rm -rf /var/www/react-app/*
+          sudo cp -r dist/* /var/www/react-app/
+
+
 
 
       
