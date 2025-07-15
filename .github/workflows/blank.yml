@@ -40,14 +40,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm ci
-        working-directory: frontend/reactproject1
+        working-directory: frontend/ReactApp
       - run: npm run build
-        working-directory: frontend/reactproject1
-      - run: ls -R frontend/reactproject1/dist
+        working-directory: frontend/ReactApp
+      - run: ls -R frontend/ReactApp/dist
       - uses: actions/upload-artifact@v4
         with:
           name: react-build
-          path: frontend/reactproject1/dist/
+          path: frontend/ReactApp/dist/
 
   deploy:
     needs: build
