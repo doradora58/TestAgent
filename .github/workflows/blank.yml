@@ -58,6 +58,28 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
+          name: react-build
+          path: dist/
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: react-build
+          path: ./dist
+
+      - name: Clean old Nginx content
+        run: sudo rm -rf /var/www/react-app/*
+
+      - name: Copy new build to Nginx
+        run: sudo cp -r dist/* /var/www/react-app/
+
+      - name: Reload Nginx
+        run: sudo systemctl reload nginx
+
 
 
 
