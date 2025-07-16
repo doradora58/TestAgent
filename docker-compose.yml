@@ -1,4 +1,3 @@
-version: "3.9"
 name: TestAgent
 services:
   webapi:
