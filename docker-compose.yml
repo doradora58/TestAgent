@@ -4,9 +4,7 @@ services:
     build:
       context: ./backend/WebApplication1
       dockerfile: Dockerfile
-      args:
-        GIT_TAG: ${GIT_TAG}
-    image: webapi-image:${GIT_TAG}
+    image: webapi-image:latest
     container_name: webapi
     ports:
       - "5000:5000"
@@ -18,9 +16,7 @@ services:
     build:
         context: ./frontend/ReactApp
         dockerfile: Dockerfile
-        args:
-          GIT_TAG: ${GIT_TAG}
-    image: react-image:${GIT_TAG}
+    image: react-image:latest
     container_name: react
     ports:
       - "50001:80"
