@@ -25,7 +25,7 @@ jobs:
       - name: policy
         shell: pwsh
         run: |
-          Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+          PowerShell.exe -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
       - name: Get Git Version
         id: git-version
         run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
