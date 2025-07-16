@@ -24,7 +24,10 @@ jobs:
         id: git-version
         run: echo "::set-output name=tag::$(git describe --tags --always)"
       - name: Debug Environment Variables
-        run: echo "GIT_TAG=${GIT_TAG}"
+        env:
+          GIT_TAG: ${{ steps.git-version.outputs.tag }}
+        run: |
+          echo "GIT_TAG=${GIT_TAG}"
       - name: Build 
         env:
           GIT_TAG: ${{ steps.git-version.outputs.tag }}
