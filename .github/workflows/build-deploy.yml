@@ -27,7 +27,7 @@ jobs:
         
       - name: Show dir
         shell: bash
-        run: echo "${dir}"
+        run: echo "${pwd}"
       - name: Get Git Version
         shell: bash
         run: echo "VERSION=$(git describe --tags --always)" >> $GITHUB_ENV
