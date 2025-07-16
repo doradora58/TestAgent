@@ -19,37 +19,35 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-  git-version:
-    runs-on: doradora-windows
-    needs: deploy-to-self-hosted
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  # git-version:
+  #   runs-on: doradora-windows
+  #   needs: deploy-to-self-hosted
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
         
-      - name: Show dir
-        shell: powershell
-        run: |
-          Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-          echo "${PWD.Path}"
-      - name: Get Git Version
-        shell: powershell
-        run: |
-          $VERSION = git describe --tags --always
-          echo "VERSION=$VERSION" >> $env:GITHUB_ENV
-      - name: Debug Version
-        run: echo "Tag:${{ env.VERSION  }}"
-      - name: Debug Environment Variables
-        run: echo "GIT_TAG=${{ env.VERSION  }}"
+  #     - name: Show dir
+  #       shell: powershell
+  #       run: |
+  #         Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+  #         echo "${PWD.Path}"
+  #     - name: Get Git Version
+  #       shell: powershell
+  #       run: |
+  #         $VERSION = git describe --tags --always
+  #         echo "VERSION=$VERSION" >> $env:GITHUB_ENV
+  #     - name: Debug Version
+  #       run: echo "Tag:${{ env.VERSION  }}"
+  #     - name: Debug Environment Variables
+  #       run: echo "GIT_TAG=${{ env.VERSION  }}"
         
   build-in-self-hosted:
     runs-on: self-hosted
-    needs: git-version
+    # needs: git-version
     steps:
-      - name: Inspect GITHUB_ENV
-        run: cat $GITHUB_ENV
       - name: Build 
         run: |
-          echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose build --build-arg GIT_TAG=${{ env.VERSION }}
+          echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose build
       - name: Deploy with Docker Compose
         run: |
           echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose up -d
