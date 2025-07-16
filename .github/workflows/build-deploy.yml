@@ -24,10 +24,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: policy
-        shell: pwsh
-        run: |
-          PowerShell.exe -Command "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass"
+      - name: Set Execution Policy
+        shell: powershell
+        run: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
       - name: Get Git Version
         id: git-version
         run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
