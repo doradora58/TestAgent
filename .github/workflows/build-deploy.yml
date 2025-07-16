@@ -22,6 +22,10 @@ jobs:
   git-version:
     runs-on: doradora-windows
     steps:
+      - name: policy
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
       - name: Get Git Version
         id: git-version
         run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
