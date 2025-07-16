@@ -45,6 +45,8 @@ jobs:
     runs-on: self-hosted
     needs: git-version
     steps:
+      - name: Inspect GITHUB_ENV
+        run: cat $GITHUB_ENV
       - name: Build 
         run: |
           echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose build --build-arg GIT_TAG=${{ env.VERSION }}
