@@ -41,10 +41,10 @@ jobs:
   #     - name: Debug Environment Variables
   #       run: echo "GIT_TAG=${{ env.VERSION  }}"
         
-  build-in-self-hosted:
-    runs-on: self-hosted
-    needs: deploy-to-self-hosted
-    steps:
+  # build-in-self-hosted:
+  #   runs-on: self-hosted
+  #   needs: deploy-to-self-hosted
+  #   steps:
       - name: Build 
         run: |
           echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose build
