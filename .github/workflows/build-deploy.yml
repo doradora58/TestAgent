@@ -24,6 +24,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
+      - name: Show dir
+        run: echo "${dir}"
       - name: Get Git Version
         shell: bash
         run: echo "VERSION=$(git describe --tags --always)" >> $GITHUB_ENV
