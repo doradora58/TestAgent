@@ -19,32 +19,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-  # git-version:
-  #   runs-on: doradora-windows
-  #   needs: deploy-to-self-hosted
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-        
-  #     - name: Show dir
-  #       shell: powershell
-  #       run: |
-  #         Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-  #         echo "${PWD.Path}"
-  #     - name: Get Git Version
-  #       shell: powershell
-  #       run: |
-  #         $VERSION = git describe --tags --always
-  #         echo "VERSION=$VERSION" >> $env:GITHUB_ENV
-  #     - name: Debug Version
-  #       run: echo "Tag:${{ env.VERSION  }}"
-  #     - name: Debug Environment Variables
-  #       run: echo "GIT_TAG=${{ env.VERSION  }}"
-        
-  # build-in-self-hosted:
-  #   runs-on: self-hosted
-  #   needs: deploy-to-self-hosted
-  #   steps:
       - name: Build 
         run: |
           echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose build
