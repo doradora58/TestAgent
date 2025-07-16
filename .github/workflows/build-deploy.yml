@@ -1,0 +1,39 @@
+name: Build and Deploy with Docker Compose
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. ソースコードをチェックアウト
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Docker Composeを使用してビルド
+      - name: Build Docker Compose Image
+        run: |
+          docker-compose build
+          docker-compose push
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      # 1. Docker ComposeイメージをPull
+      - name: Pull Docker Compose Image
+        run: docker-compose pull
+
+      # 2. コンテナを起動
+      - name: Run Docker Compose
+        run: docker-compose up -d
