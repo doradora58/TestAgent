@@ -27,4 +27,4 @@ jobs:
         env:
           GIT_TAG: ${{ steps.git-version.outputs.tag }}
         run: |
-          echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S sudo docker compose up --build -d --tag test-agent:${GIT_TAG}
+          echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S sudo docker compose up --build -d
