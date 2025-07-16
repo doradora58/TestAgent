@@ -1,12 +1,12 @@
 name: TestAgent
 services:
   webapi:
-    image: webapi-image:${GIT_TAG}
     build:
       context: ./backend/WebApplication1
       dockerfile: Dockerfile
       args:
         GIT_TAG: ${GIT_TAG}
+    image: webapi-image:${GIT_TAG}
     container_name: webapi
     ports:
       - "5000:5000"
@@ -15,12 +15,12 @@ services:
   
   
   react:
-    image: react-image:${GIT_TAG}
     build:
         context: ./frontend/ReactApp
         dockerfile: Dockerfile
         args:
           GIT_TAG: ${GIT_TAG}
+    image: react-image:${GIT_TAG}
     container_name: react
     ports:
       - "50001:80"
