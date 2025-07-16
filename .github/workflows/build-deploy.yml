@@ -24,13 +24,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Set Execution Policy
-        shell: powershell
-        run: |
-          Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
       - name: Get Git Version
-        id: git-version
-        run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
+        shell: bash
+        run: echo "VERSION=$(git describe --tags --always)" >> $GITHUB_ENV
+      - name: Debug Version
+        run: echo "Tag:${{ env.Tag }}"
       - name: Debug Environment Variables
         run: echo "GIT_TAG=${{ env.tag }}"
         
