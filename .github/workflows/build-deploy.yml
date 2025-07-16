@@ -23,8 +23,11 @@ jobs:
       - name: Get Git Version
         id: git-version
         run: echo "::set-output name=tag::$(git describe --tags --always)"
-      - name: Build and run
+      - name: Build 
         env:
           GIT_TAG: ${{ steps.git-version.outputs.tag }}
         run: |
-          echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S sudo docker compose up --build -d
+          echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose build
+      - name: Deploy with Docker Compose
+        run: |
+          echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose up -d
