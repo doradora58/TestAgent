@@ -27,7 +27,9 @@ jobs:
         
       - name: Show dir
         shell: powershell
-        run: echo "${PWD.Path}"
+        run: |
+          Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+          echo "${PWD.Path}"
       - name: Get Git Version
         shell: powershell
         run: |
