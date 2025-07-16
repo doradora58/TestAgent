@@ -2,7 +2,7 @@ version: "3.9"
 name: TestAgent
 services:
   webapi:
-    image: webapi-image:{GIT_TAG}
+    image: webapi-image:latest
     build:
       context: ./backend/WebApplication1
       dockerfile: Dockerfile
@@ -13,7 +13,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
   
   react:
-    image: react-image:{GIT_TAG}
+    image: react-image:latest
     build:
         context: ./frontend/ReactApp
         dockerfile: Dockerfile
