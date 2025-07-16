@@ -27,14 +27,16 @@ jobs:
         
       - name: Show dir
         shell: pwsh
-        run: echo "${PWD}"
+        run: echo "${PWD.Path}"
       - name: Get Git Version
-        shell: bash
-        run: echo "VERSION=$(git describe --tags --always)" >> $GITHUB_ENV
+        shell: pwsh
+        run: |
+          $VERSION = git describe --tags --always
+          echo "VERSION=$VERSION" >> $env:GITHUB_ENV
       - name: Debug Version
-        run: echo "Tag:${{ env.Tag }}"
+        run: echo "Tag:${{ env.VERSION  }}"
       - name: Debug Environment Variables
-        run: echo "GIT_TAG=${{ env.tag }}"
+        run: echo "GIT_TAG=${{ env.VERSION  }}"
         
   build-in-self-hosted:
     runs-on: self-hosted
