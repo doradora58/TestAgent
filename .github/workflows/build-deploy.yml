@@ -43,7 +43,7 @@ jobs:
         
   build-in-self-hosted:
     runs-on: self-hosted
-    # needs: git-version
+    needs: deploy-to-self-hosted
     steps:
       - name: Build 
         run: |
