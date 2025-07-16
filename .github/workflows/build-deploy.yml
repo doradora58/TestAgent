@@ -22,6 +22,8 @@ jobs:
   git-version:
     runs-on: doradora-windows
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: policy
         shell: pwsh
         run: |
