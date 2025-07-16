@@ -13,17 +13,24 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  dotnet-build-in-self-hosted:
+  deploy-to-self-hosted:
     runs-on: self-hosted
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+  git-version:
+    runs-on: doradora-windows
+    steps:
       - name: Get Git Version
         id: git-version
         run: echo "tag=$(git describe --tags --always)" >> $GITHUB_ENV
       - name: Debug Environment Variables
         run: echo "GIT_TAG=${{ env.tag }}"
+        
+  build-in-self-hosted:
+    runs-on: self-hosted
+    steps:
       - name: Build 
         run: |
           echo "${{ secrets.RUNNER_PASSWORD }}" | sudo -S docker compose build --build-arg GIT_TAG=${{ env.tag }}
