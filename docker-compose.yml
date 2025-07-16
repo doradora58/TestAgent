@@ -1,7 +1,7 @@
 name: TestAgent
 services:
   webapi:
-    image: webapi-image:latest
+    image: webapi-image:${GIT_TAG}
     build:
       context: ./backend/WebApplication1
       dockerfile: Dockerfile
@@ -12,7 +12,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
   
   react:
-    image: react-image:latest
+    image: react-image:${GIT_TAG}
     build:
         context: ./frontend/ReactApp
         dockerfile: Dockerfile
