@@ -40,3 +40,21 @@
 .read-the-docs {
   color: #888;
 }
+
+.chart-container {
+    background-color: #000000;
+    padding: 20px;
+}
+
+.task-bar {
+    background-color: #4caf50;
+    color: #000;
+    border: 1px solid #3a8d40;
+    position: relative;
+}
+
+.task-bar span {
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+}
