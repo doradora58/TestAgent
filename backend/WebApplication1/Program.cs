@@ -1,4 +1,4 @@
-using System.Net;
+namespace WebApplication1;
 
 public class Program
 {
