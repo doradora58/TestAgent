@@ -43,7 +43,7 @@ function App() {
                 {tasks.length > 0 ? (
                     tasks.map((task) => (
                     <div key={task.id} className="task-bar">
-                            { task.id} : <strong>{task.title}</strong> ({task.dueDate})
+                            {task.id} : <strong>{task.title}</strong> {task.status} {task.assignedTo} ({task.plannedTerm.startDate} ~ {task.plannedTerm.endDate})
                     </div>
                     ))
                 ): (<p>Loading tasks...</p> // データがまだフェッチされていない場合のメッセージ
