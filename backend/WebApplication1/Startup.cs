@@ -1,4 +1,11 @@
-﻿namespace WebApplication1;
+﻿using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data;
+using WebApplication1.Repositories;
+using WebApplication1.Services;
+
+namespace WebApplication1;
 
 public class Startup
 {
@@ -14,6 +21,17 @@ public class Startup
                 policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             });
         });
+        AddTaskServices(services);
+    }
+
+    private void AddTaskServices(IServiceCollection services)
+    {
+        services.AddScoped<ITaskService, TaskService>();
+        services.AddScoped<ITaskRepository, TaskRepository>();
+        //services.AddDbContext<AppDbContext>(options =>
+        //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddScoped<IAppDbContext, AppDbContextStub>(); //TODO
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
