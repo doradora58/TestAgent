@@ -4,27 +4,39 @@ using WebApplication1.Models;
 namespace WebApplication1.Data
 {
     // ReSharper disable once InconsistentNaming
-    public class FakeDbSet<T> :IEnumerable<TaskEntity>
+    public class FakeDbSet :IEnumerable<TaskEntity>
     {
         private readonly List<TaskEntity> _data = new()
         {
             new TaskEntity()
             {
                 Id = 1,
+                Title = "Abcde",
                 CreatedAt = DateTime.Now,
                 Description = "aaa",
-                DueDate = DateTime.Now.Add(TimeSpan.FromDays(1)),
-                Status = "Active",
-                Title = "Abcde",
+                Status = TaskProgress.New,
+                PlannedTerm = new PlannedTerm()
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.Add(TimeSpan.FromDays(1)),
+                },
+                ActualTerm = new ActualTerm(),
+                AssignedTo = "Me",
             },
             new TaskEntity()
             {
-                Id = 2,
-                CreatedAt = DateTime.Now,
-                Description = "bbbb",
-                DueDate = DateTime.Now.Add(TimeSpan.FromDays(1)),
-                Status = "Active",
-                Title = "ABCDE",
+                Id = 1,
+                Title = "Abcde",
+                CreatedAt = DateTime.Now.Add(TimeSpan.FromDays(1)),
+                Description = "aaa",
+                Status = TaskProgress.New,
+                PlannedTerm = new PlannedTerm()
+                {
+                    StartDate = DateTime.Now.Add(TimeSpan.FromDays(1)),
+                    EndDate = DateTime.Now.Add(TimeSpan.FromDays(2)),
+                },
+                ActualTerm = new ActualTerm(),
+                AssignedTo = "Me",
             }
         };
 

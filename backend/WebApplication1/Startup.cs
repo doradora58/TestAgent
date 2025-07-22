@@ -1,7 +1,4 @@
-﻿using System.Configuration;
-using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using WebApplication1.Data;
+﻿using WebApplication1.Data;
 using WebApplication1.Repositories;
 using WebApplication1.Services;
 

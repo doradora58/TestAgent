@@ -20,7 +20,6 @@ namespace WebApplication1.Controllers
         public async Task<IActionResult> GetTaskById(int id)
         {
             var task = await taskService.GetTaskByIdAsync(id);
-            if (task == null) return NotFound();
             return Ok(task);
         }
     }

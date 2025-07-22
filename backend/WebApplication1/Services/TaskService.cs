@@ -14,7 +14,9 @@ namespace WebApplication1.Services
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
-                DueDate = task.DueDate
+                PlannedTerm = task.PlannedTerm,
+                ActualTerm = task.ActualTerm,
+                AssignedTo = task.AssignedTo,
             });
         }
 
@@ -28,7 +30,9 @@ namespace WebApplication1.Services
                 Title = task.Title,
                 Description = task.Description,
                 Status = task.Status,
-                DueDate = task.DueDate
+                PlannedTerm = task.PlannedTerm,
+                ActualTerm = task.ActualTerm,
+                AssignedTo = task.AssignedTo,
             };
         }
     }
