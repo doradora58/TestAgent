@@ -1,4 +1,5 @@
-﻿using WebApplication1.Models;
+﻿using Microsoft.OpenApi.Extensions;
+using WebApplication1.Models;
 using WebApplication1.Repositories;
 
 namespace WebApplication1.Services
@@ -13,7 +14,7 @@ namespace WebApplication1.Services
                 Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
-                Status = task.Status,
+                Status = task.Status.GetDisplayName(),
                 PlannedTerm = task.PlannedTerm,
                 ActualTerm = task.ActualTerm,
                 AssignedTo = task.AssignedTo,
@@ -29,7 +30,7 @@ namespace WebApplication1.Services
                 Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
-                Status = task.Status,
+                Status = task.Status.GetDisplayName(),
                 PlannedTerm = task.PlannedTerm,
                 ActualTerm = task.ActualTerm,
                 AssignedTo = task.AssignedTo,

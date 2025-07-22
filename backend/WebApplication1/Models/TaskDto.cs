@@ -6,7 +6,7 @@ public class TaskDto
     public string Title { get; set; }
     public string Description { get; set; }
     public string AssignedTo { get; set; }
-    public TaskProgress Status { get; set; }
+    public string Status { get; set; }
 
     public PlannedTerm PlannedTerm { get; set; }
     public ActualTerm ActualTerm { get; set; }
