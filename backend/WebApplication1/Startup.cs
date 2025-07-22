@@ -13,9 +13,9 @@ public class Startup
         services.AddSwaggerGen();
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAll", builder =>
+            options.AddDefaultPolicy(builder =>
             {
-                builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                builder.WithOrigins("http://*").AllowAnyMethod().AllowAnyHeader();
             });
         });
         AddTaskServices(services);
@@ -40,7 +40,7 @@ public class Startup
         app.UseRouting();
         app.UseAuthorization();
 
-        app.UseCors("AllowAll");
+        app.UseCors();
 
         app.UseEndpoints(endpoints =>
         {
