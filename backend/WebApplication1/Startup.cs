@@ -13,9 +13,9 @@ public class Startup
         services.AddSwaggerGen();
         services.AddCors(options =>
         {
-            options.AddDefaultPolicy(builder =>
+            options.AddDefaultPolicy(policy =>
             {
-                builder.WithOrigins("http://*").AllowAnyMethod().AllowAnyHeader();
+                policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             });
         });
         AddTaskServices(services);
