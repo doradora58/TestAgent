@@ -10,7 +10,7 @@ function App() {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await fetch('http://localhost:5000/Tasks');
+                const response = await fetch('http://100.90.217.39::5000/Tasks');
                 const data = await response.json();
                 setTasks(data);
             } catch (error) {
