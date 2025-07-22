@@ -8,6 +8,8 @@ services:
     container_name: webapi
     ports:
       - "5000:5000"
+    networks:
+      - my-network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
   
@@ -19,8 +21,14 @@ services:
     image: react-image:latest
     container_name: react
     ports:
-      - "50001:80"
+      - "50001:80"    
+    networks:
+      - my-network
     volumes:
       - .:/app
     environment:
       - NODE_ENV=production
+
+networks:
+  my-network:
+    driver: bridge
