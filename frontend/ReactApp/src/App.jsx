@@ -1,59 +1,29 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import GanttChart from "./components/GanttChart";
+import { fetchTasks } from "./api/tasksApi";
+import "./styles/App.css"
 
 function App() {
-    const [count, setCount] = useState(0);
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        const fetchTasks = async () => {
+        const loadTasks = async () => {
             try {
-                const response = await fetch('http://100.90.217.39:5000/Tasks');
-                const data = await response.json();
+                const data = await fetchTasks();
                 setTasks(data);
             } catch (error) {
-                console.error('Failed to fetch tasks:', error);
+                console.error("Failed to fetch tasks:", error);
             }
         };
-        fetchTasks();
+        loadTasks();
     }, []);
+
     return (
-        <>
-            <div>
-                <a href="https://vite.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
-            </div>
-            <div className="chart-container">
-                <h1>Gantt Chart</h1>
-                {tasks.length > 0 ? (
-                    tasks.map((task) => (
-                    <div key={task.id} className="task-bar">
-                            {task.id} : <strong>{task.title}</strong> {task.status} {task.assignedTo} ({task.plannedTerm.startDate} ~ {task.plannedTerm.endDate})
-                    </div>
-                    ))
-                ): (<p>Loading tasks...</p>
-                )}
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </>
-    )
+        <div>
+            <h1>Delivery Plan</h1>
+            <GanttChart tasks={tasks} />
+        </div>
+    );
 }
 
-export default App
+export default App;
