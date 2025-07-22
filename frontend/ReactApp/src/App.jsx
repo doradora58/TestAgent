@@ -10,7 +10,7 @@ function App() {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await fetch('http://webapi:5000/Tasks');
+                const response = await fetch('http://localhost:5000/Tasks');
                 const data = await response.json();
                 setTasks(data);
             } catch (error) {
@@ -46,7 +46,7 @@ function App() {
                             {task.id} : <strong>{task.title}</strong> {task.status} {task.assignedTo} ({task.plannedTerm.startDate} ~ {task.plannedTerm.endDate})
                     </div>
                     ))
-                ): (<p>Loading tasks...</p> // データがまだフェッチされていない場合のメッセージ
+                ): (<p>Loading tasks...</p>
                 )}
             </div>
             <p className="read-the-docs">
