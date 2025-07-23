@@ -1,5 +1,5 @@
 export async function fetchTasks() {
-    const response = await fetch("http://webapi:50000/Tasks", {
+    const response = await fetch("http://172.20.0.3:50000/Tasks", {
         headers: {
             "Content-Type": "application/json",
             "Accept": "*/*",
