@@ -12,6 +12,7 @@ services:
       - my-network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    restart: always
   
   
   react:
@@ -28,6 +29,7 @@ services:
       - .:/app
     environment:
       - NODE_ENV=production
+    restart: always
 
 networks:
   my-network:
