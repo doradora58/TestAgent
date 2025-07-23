@@ -1,8 +1,5 @@
 name: TestAgent
 services:
-  networks:
-    my-network:
-      external: true
   webapi:
     build:
       context: ./backend/WebApplication1
@@ -32,4 +29,6 @@ services:
     environment:
       - NODE_ENV=production
     restart: always
-
+networks:
+  my-network:
+    external: true
