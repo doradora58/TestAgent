@@ -13,7 +13,7 @@ public class Startup
         services.AddSwaggerGen();
         services.AddCors(options =>
         {
-            options.AddDefaultPolicy(policy =>
+            options.AddPolicy("AllowReact",policy =>
             {
                 policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
             });
@@ -40,7 +40,7 @@ public class Startup
         app.UseRouting();
         app.UseAuthorization();
 
-        app.UseCors();
+        app.UseCors("AllowReact");
 
         app.UseEndpoints(endpoints =>
         {
