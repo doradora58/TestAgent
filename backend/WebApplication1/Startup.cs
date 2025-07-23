@@ -38,7 +38,7 @@ public class Startup
         app.UseSwaggerUI();
 
         app.UseRouting();
-        app.UseAuthorization();
+        //app.UseAuthorization();
 
         app.UseCors("AllowReact");
 
