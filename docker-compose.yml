@@ -1,5 +1,9 @@
 name: TestAgent
 services:
+  networks:
+    my-network:
+      driver: bridge
+
   webapi:
     build:
       context: ./backend/WebApplication1
@@ -9,7 +13,8 @@ services:
     ports:
       - "5000:5000"
     networks:
-      - my-network
+      my-network:
+        external: true
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: always
@@ -23,13 +28,11 @@ services:
     ports:
       - "50001:80"    
     networks:
-      - my-network
+      my-network:
+        external: true
     volumes:
       - .:/app
     environment:
       - NODE_ENV=production
     restart: always
 
-networks:
-  my-network:
-    driver: bridge
