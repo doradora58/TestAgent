@@ -3,7 +3,7 @@ services:
   networks:
     my-network:
       driver: bridge
-
+      external: true
   webapi:
     build:
       context: ./backend/WebApplication1
@@ -13,8 +13,7 @@ services:
     ports:
       - "5000:5000"
     networks:
-      my-network:
-        external: true
+      - my-network
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: always
@@ -28,8 +27,7 @@ services:
     ports:
       - "50001:80"    
     networks:
-      my-network:
-        external: true
+      - my-network
     volumes:
       - .:/app
     environment:
