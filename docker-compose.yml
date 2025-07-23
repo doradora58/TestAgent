@@ -13,12 +13,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: always
-  
-  
+
   react:
     build:
-        context: ./frontend/ReactApp
-        dockerfile: Dockerfile
+      context: ./frontend/ReactApp
+      dockerfile: Dockerfile
     image: react-image:latest
     container_name: react
     ports:
