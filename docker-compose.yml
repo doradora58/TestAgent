@@ -7,7 +7,7 @@ services:
     image: webapi-image:latest
     container_name: webapi
     ports:
-      - "5000:5000"
+      - "50000:50000"
     networks:
       - my-network
     environment:
