@@ -1,5 +1,5 @@
 export async function fetchTasks() {
-    const response = await fetch("http://localhost:5000/Tasks");
+    const response = await fetch("http://webapi:5000/Tasks");
     if (!response.ok) {
         throw new Error("Failed to fetch tasks");
     }
