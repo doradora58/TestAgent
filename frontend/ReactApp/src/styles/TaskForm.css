@@ -1,0 +1,17 @@
+.task-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: darkslateblue;
+    margin-top: 10px;
+}
+
+.task-form label {
+    margin-bottom: 10px;
+}
+
+.task-form input {
+    margin-left: 10px;
+}

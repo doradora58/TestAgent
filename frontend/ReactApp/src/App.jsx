@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import GanttChart from "./components/GanttChart";
+import CreateTask from "./components/CreateTask";
 import { fetchTasks } from "./api/tasksApi";
 import "./styles/App.css"
 
@@ -22,6 +23,7 @@ function App() {
         <div>
             <h1>Delivery Plan</h1>
             <GanttChart tasks={tasks} />
+            <CreateTask />
         </div>
     );
 }
