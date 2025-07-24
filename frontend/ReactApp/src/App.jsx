@@ -20,7 +20,7 @@ function App() {
 
     return (
         <div>
-            <h1>Delivery Plan</h1>
+            <h1>Delivery Plan Ve1</h1>
             <GanttChart tasks={tasks} />
         </div>
     );
