@@ -1,0 +1,28 @@
+.date-axis {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.date-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end; /* ’†‰›‘µ‚¦ */
+    font-size: 14px;
+    color: #333;
+    width: 100px; /* ŒÅ’è•‚ğİ’è */
+}
+
+.year {
+    font-weight: bold;
+}
+
+.month {
+    color: #007bff;
+}
+
+.day {
+    color: #4caf50;
+}
