@@ -22,17 +22,3 @@
 .gantt-bar.completed {
     background-color: #2196f3; /* Completedタスクは青 */
 }
-
-.week-lines {
-    position: relative;
-    display: flex;
-    align-items: center; /* 各週線を揃える */
-    height: 100%;
-}
-
-.week-line {
-    position: absolute;
-    height: 100%;
-    width: 1px;
-    background-color: #007bff;
-}

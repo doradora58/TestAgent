@@ -17,18 +17,7 @@ function GanttChart({ tasks }) {
     return (
         <div className="gantt-container">
             <DateAxis startDate={startDate} endDate={endDate} />
-            <div className="week-lines">
-                {weekDates.map((date, index) => {
-                    const offset = (date - startDate) / (1000 * 60 * 60 * 24) * 50;
-                    return (
-                        <div
-                            key={index}
-                            className="week-line"
-                            style={{ left: `${offset}px` }}
-                        />
-                    );
-                })}
-            </div>
+
             {tasks.map(task => (
                 <TaskBar key={task.id} task={task} startDate={startDate} />
             ))}
