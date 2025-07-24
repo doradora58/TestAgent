@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Models;
+﻿using Microsoft.OpenApi.Extensions;
+
+namespace WebApplication1.Models;
 
 public class TaskEntity
 {
@@ -6,7 +8,24 @@ public class TaskEntity
     public string Title { get; set; }
     public string Description { get; set; }
     public string AssignedTo { get; set; }
-    public TaskProgress Status { get; set; }
+
+    private TaskProgress _status = new TaskProgress();
+
+    public string Status
+    {
+        get => _status.GetDisplayName();
+        set
+        {
+            if (Enum.TryParse<TaskProgress>(value, out var parsedStatus))
+            {
+                _status = parsedStatus;
+            }
+            else
+            {
+                throw new ArgumentException("Invalid TaskProgress value");
+            }
+        }
+    }
 
     public PlannedTerm PlannedTerm { get; set; }
     public ActualTerm ActualTerm { get; set; }

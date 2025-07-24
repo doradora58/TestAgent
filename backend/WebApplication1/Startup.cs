@@ -27,7 +27,7 @@ public class Startup
         services.AddScoped<ITaskRepository, TaskRepository>();
         //services.AddDbContext<AppDbContext>(options =>
         //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-        services.AddScoped<IAppDbContext, AppDbContextStub>(); //TODO
+        services.AddSingleton<IAppDbContext, AppDbContextStub>(); //TODO
 
     }
 

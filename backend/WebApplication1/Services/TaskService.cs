@@ -1,4 +1,5 @@
 ﻿using Microsoft.OpenApi.Extensions;
+using System.Threading.Tasks;
 using WebApplication1.Models;
 using WebApplication1.Repositories;
 
@@ -6,6 +7,8 @@ namespace WebApplication1.Services
 {
     public class TaskService(ITaskRepository taskRepository) :ITaskService
     {
+        private int _currentId=1;
+
         public async Task<IEnumerable<TaskDto>> GetTasksAsync()
         {
             var tasks = await taskRepository.GetAllTasksAsync();
@@ -14,7 +17,7 @@ namespace WebApplication1.Services
                 Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
-                Status = task.Status.GetDisplayName(),
+                Status = task.Status,
                 PlannedTerm = task.PlannedTerm,
                 ActualTerm = task.ActualTerm,
                 AssignedTo = task.AssignedTo,
@@ -30,7 +33,27 @@ namespace WebApplication1.Services
                 Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
-                Status = task.Status.GetDisplayName(),
+                Status = task.Status,
+                PlannedTerm = task.PlannedTerm,
+                ActualTerm = task.ActualTerm,
+                AssignedTo = task.AssignedTo,
+            };
+        }
+
+
+        public async Task<TaskDto> CreateTaskAsync(TaskEntity taskEntity)
+        {
+            if (string.IsNullOrEmpty(taskEntity.Title))
+            {
+                throw new ArgumentException("Task annot be empty");
+            }
+            var task = await taskRepository.Add(taskEntity);
+            return new TaskDto
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                Status = task.Status,
                 PlannedTerm = task.PlannedTerm,
                 ActualTerm = task.ActualTerm,
                 AssignedTo = task.AssignedTo,

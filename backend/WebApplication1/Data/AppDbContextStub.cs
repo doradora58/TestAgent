@@ -4,7 +4,7 @@ namespace WebApplication1.Data
 {
     public class AppDbContextStub : IAppDbContext
     {
-        public IEnumerable<TaskEntity> Tasks { get; set; } = new FakeDbSet();
+        public IEnumerable<TaskDto> Tasks { get; set; } = new FakeDbSet();
 
     }
 

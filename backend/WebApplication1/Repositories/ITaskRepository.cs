@@ -4,6 +4,7 @@ namespace WebApplication1.Repositories;
 
 public interface ITaskRepository
 {
-    Task<IEnumerable<TaskEntity>> GetAllTasksAsync();
-    Task<TaskEntity?> GetTaskByIdAsync(int id);
+    Task<IEnumerable<TaskDto>> GetAllTasksAsync();
+    Task<TaskDto?> GetTaskByIdAsync(int id);
+    Task<TaskDto> Add(TaskEntity taskEntity);
 }

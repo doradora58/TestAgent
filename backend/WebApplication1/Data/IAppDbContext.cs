@@ -4,7 +4,7 @@ namespace WebApplication1.Data
 {
     public interface IAppDbContext
     {
-        IEnumerable<TaskEntity> Tasks { get; set; }
+        IEnumerable<TaskDto> Tasks { get; set; }
     }
 
 }

@@ -1,50 +1,51 @@
 ﻿using System.Collections;
+using Microsoft.OpenApi.Extensions;
 using WebApplication1.Models;
 
 namespace WebApplication1.Data
 {
     // ReSharper disable once InconsistentNaming
-    public class FakeDbSet :IEnumerable<TaskEntity>
+    public class FakeDbSet :IEnumerable<TaskDto>
     {
-        private readonly List<TaskEntity> _data = new()
+        private readonly List<TaskDto> _data = new()
         {
-            new TaskEntity()
+            new TaskDto()
             {
                 Id = 1,
                 Title = "Abcde",
                 CreatedAt = DateTime.Now,
                 Description = "aaa",
-                Status = TaskProgress.New,
+                Status = TaskProgress.New.GetDisplayName(),
                 PlannedTerm = new PlannedTerm()
                 {
                     StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.Add(TimeSpan.FromDays(1)),
+                    EndDate = DateTime.Now.Add(TimeSpan.FromDays(3)),
                 },
                 ActualTerm = new ActualTerm(),
                 AssignedTo = "Me",
             },
-            new TaskEntity()
+            new TaskDto()
             {
                 Id = 2,
                 Title = "ABCDE",
-                CreatedAt = DateTime.Now.Add(TimeSpan.FromDays(1)),
+                CreatedAt = DateTime.Now.Add(TimeSpan.FromDays(3)),
                 Description = "aaa",
-                Status = TaskProgress.New,
+                Status = TaskProgress.New.GetDisplayName(),
                 PlannedTerm = new PlannedTerm()
                 {
-                    StartDate = DateTime.Now.Add(TimeSpan.FromDays(1)),
-                    EndDate = DateTime.Now.Add(TimeSpan.FromDays(2)),
+                    StartDate = DateTime.Now.Add(TimeSpan.FromDays(3)),
+                    EndDate = DateTime.Now.Add(TimeSpan.FromDays(6)),
                 },
                 ActualTerm = new ActualTerm(),
                 AssignedTo = "Me",
             },
-            new TaskEntity()
+            new TaskDto()
             {
                 Id =3,
                 Title = "ABCDE",
                 CreatedAt = DateTime.Now.Add(TimeSpan.FromDays(5)),
                 Description = "aaa",
-                Status = TaskProgress.New,
+                Status = TaskProgress.New.GetDisplayName(),
                 PlannedTerm = new PlannedTerm()
                 {
                     StartDate = DateTime.Now.Add(TimeSpan.FromDays(5)),
@@ -53,13 +54,13 @@ namespace WebApplication1.Data
                 ActualTerm = new ActualTerm(),
                 AssignedTo = "Me",
             },
-            new TaskEntity()
+            new TaskDto()
             {
                 Id = 4,
                 Title = "ABCDE",
                 CreatedAt = DateTime.Now.Add(TimeSpan.FromDays(10)),
                 Description = "aaa",
-                Status = TaskProgress.New,
+                Status = TaskProgress.New.GetDisplayName(),
                 PlannedTerm = new PlannedTerm()
                 {
                     StartDate = DateTime.Now.Add(TimeSpan.FromDays(10)),
@@ -71,7 +72,7 @@ namespace WebApplication1.Data
         };
 
 
-        public IEnumerator<TaskEntity> GetEnumerator()
+        public IEnumerator<TaskDto> GetEnumerator()
         {
             return _data.GetEnumerator();
         }

@@ -6,5 +6,6 @@ namespace WebApplication1.Services
     {
         Task<IEnumerable<TaskDto>> GetTasksAsync();
         Task<TaskDto> GetTaskByIdAsync(int id);
+        Task<TaskDto> CreateTaskAsync(TaskEntity taskEntity);
     }
 }
