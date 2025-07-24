@@ -8,7 +8,7 @@ function TaskForm({ onSubmit }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const newTask = {
-            id: Math.random(), // ˆêˆÓ‚ÌID‚ğ¶¬
+            id: Math.random(),
             name: taskName,
             plannedTerm: {
                 startDate: startDate,

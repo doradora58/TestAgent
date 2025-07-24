@@ -1,5 +1,5 @@
 export async function fetchTasks() {
-    const response = await fetch("http://localhost:50000/Tasks", {
+    const response = await fetch("http://100.90.217.39:50000/Tasks", {
         headers: {
             "Content-Type": "application/json",
             "Accept": "*/*",

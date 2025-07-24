@@ -6,13 +6,12 @@ function CreateTask(){
     const [showForm, setShowForm] = useState(false);
 
     const handleNewTaskClick = () => {
-        setShowForm(true); // フォームを表示
+        setShowForm(true);
     };
 
     const handleTaskSubmit = (newTask) => {
-        // 新しいタスクを登録する処理
         console.log("New Task:", newTask);
-        setShowForm(false); // フォームを閉じる
+        setShowForm(false);
     };
 
     return (
