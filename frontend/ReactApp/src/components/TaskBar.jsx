@@ -1,6 +1,7 @@
 import "../styles/GanttChart.css"
-import {useState } from "react"
-function TaskBar({ task, startDate, onRemove, onEdit }) {
+import { useState } from "react"
+import { removeTask } from "../api/tasksApi"
+function TaskBar({ task, startDate, onEdit }) {
     const [showOptions, setShowOptions] = useState(false);
     const startOffset =
         (new Date(task.plannedTerm.startDate) - new Date(startDate)) / (1000 * 60 * 60 * 24);
@@ -21,7 +22,7 @@ function TaskBar({ task, startDate, onRemove, onEdit }) {
             {showOptions && (
                 <div className="options-modal">
                     <button onClick={() => { onEdit(task); setShowOptions(false); }}>Edit</button>
-                    <button onClick={() => { onRemove(task.id); setShowOptions(false); }}>Remove</button>
+                    <button onClick={() => { removeTask(task.id); setShowOptions(false); }}>Remove</button>
                 </div>
             )}
         </div>

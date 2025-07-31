@@ -28,3 +28,18 @@ export async function createTask(newTask) {
 
     return response.json();
 }
+
+export async function removeTask(taskId) {
+    try {
+        const response = await fetch(BASE_URL + `/Tasks/${taskId}`, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            console.log('Task successfully removed!');
+        } else {
+            console.error('Failed to remove task:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error while removing task:', error);
+    }
+};
