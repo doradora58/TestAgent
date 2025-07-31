@@ -30,11 +30,50 @@ namespace WebApplication1.Controllers
             try
             {
                 var newTask = await taskService.CreateTaskAsync(taskEntity);
-                return CreatedAtAction(nameof(CreateTask), new { id = taskEntity.Id }, newTask);
+                return CreatedAtAction(nameof(GetTaskById), new { id = taskEntity.Id }, newTask);
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTask(int id)
+        {
+            try
+            {
+                var removedTask= await taskService.DeleteTaskAsync(id);
+                return Ok(removedTask);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal error: {ex.Message}");
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskEntity taskEntity)
+        {
+            if (id != taskEntity.Id)
+            {
+                return BadRequest("Id not found");
+            }
+
+            try
+            {
+                var updatedTask = await taskService.UpdateTaskAsync(id, taskEntity);
+                return Ok(updatedTask);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal error: {ex.Message}");
             }
         }
     }

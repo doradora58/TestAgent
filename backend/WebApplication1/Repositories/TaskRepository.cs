@@ -33,6 +33,35 @@ namespace WebApplication1.Repositories
             context.Tasks = context.Tasks.Append(newTask);
             return Task.FromResult(newTask);
         }
+
+        public Task<TaskDto> Remove(int id)
+        {
+            var taskToRemove = context.Tasks.FirstOrDefault(task => task.Id == id);
+            if (taskToRemove == null)
+            {
+                throw new KeyNotFoundException($"Task with ID {id} not found.");
+            }
+
+            context.Tasks = context.Tasks.Where(task => task.Id != id).ToList();
+            return Task.FromResult(taskToRemove);
+        }
+
+        public async Task UpdateAsync(TaskDto taskToUpdate)
+        {
+            var currentTask = context.Tasks.FirstOrDefault(task => task.Id == taskToUpdate.Id);
+            if (currentTask == null)
+            {
+                throw new KeyNotFoundException("Task not found");
+            }
+            //currentTask.Id = taskToUpdate.Id;
+            currentTask.Title = taskToUpdate?.Title;
+            currentTask.Description = taskToUpdate?.Description;
+            currentTask.PlannedTerm = taskToUpdate?.PlannedTerm;
+            //currentTask.Status = taskToUpdate?.Status;
+            //currentTask.ActualTerm= taskToUpdate?.ActualTerm;
+            //currentTask.AssignedTo= taskToUpdate?.AssignedTo;
+
+        }
     }
 
 
