@@ -25,10 +25,10 @@ namespace WebApplication1.Repositories
                 Title = taskEntity.Title,
                 Description = taskEntity.Description,
                 PlannedTerm = taskEntity.PlannedTerm,
-                ActualTerm = taskEntity.ActualTerm,
-                AssignedTo = taskEntity.AssignedTo,
-                CreatedAt = DateTime.Now,
-                Status = taskEntity.Status
+                //ActualTerm = taskEntity.ActualTerm,
+                //AssignedTo = taskEntity.AssignedTo,
+                //CreatedAt = DateTime.Now,
+                Status = TaskProgress.New.GetDisplayName()
             };
             context.Tasks = context.Tasks.Append(newTask);
             return Task.FromResult(newTask);

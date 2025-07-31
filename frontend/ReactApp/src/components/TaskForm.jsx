@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import "../styles/TaskForm.css"
 function TaskForm({ onSubmit }) {
-    const [taskName, setTitle] = useState("");
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const newTask = {
-            id: Math.random(),
-            name: taskName,
+            description: description,
+            title: title,
             plannedTerm: {
                 startDate: startDate,
                 endDate: endDate,
@@ -22,11 +23,11 @@ function TaskForm({ onSubmit }) {
         <form onSubmit={handleSubmit} className="task-form">
             <label>
                 Title:
-                <input type="text" value={taskName} onChange={(e) => setTitle(e.target.value)} />
+                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             </label>
             <label>
                 Description:
-                <input type="text" value={taskName} onChange={(e) => setTitle(e.target.value)} />
+                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
             </label>
             <label>
                 Start Date:

@@ -45,7 +45,7 @@ namespace WebApplication1.Services
         {
             if (string.IsNullOrEmpty(taskEntity.Title))
             {
-                throw new ArgumentException("Task annot be empty");
+                throw new ArgumentException("Task cannot be empty");
             }
             var task = await taskRepository.Add(taskEntity);
             return new TaskDto
