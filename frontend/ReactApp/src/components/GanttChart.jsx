@@ -11,7 +11,7 @@ function GanttChart({ tasks }) {
 
     while (currentDate <= endDate) {
         weekDates.push(new Date(currentDate));
-        currentDate.setDate(currentDate.getDate() + 7);
+        currentDate.setDate(currentDate.getDate() + (window.innerWidth < 768 ? 1 : 7));
     }
 
     return (
