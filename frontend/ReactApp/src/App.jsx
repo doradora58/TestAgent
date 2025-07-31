@@ -22,8 +22,8 @@ function App() {
     return (
         <div>
             <h1>Delivery Plan</h1>
-            <GanttChart tasks={tasks} />
-            <CreateTask />
+            <GanttChart tasks={tasks} setTasks={setTasks} />
+            <CreateTask setTasks={setTasks} />
         </div>
     );
 }

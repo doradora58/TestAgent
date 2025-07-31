@@ -41,22 +41,21 @@ namespace WebApplication1.Services
         }
 
 
-        public async Task<TaskDto> CreateTaskAsync(TaskEntity taskEntity)
+        public async Task<TaskEntity> CreateTaskAsync(TaskEntity taskEntity)
         {
             if (string.IsNullOrEmpty(taskEntity.Title))
             {
                 throw new ArgumentException("Task cannot be empty");
             }
             var task = await taskRepository.Add(taskEntity);
-            return new TaskDto
+            return new TaskEntity
             {
                 Id = task.Id,
                 Title = task.Title,
                 Description = task.Description,
-                Status = task.Status,
+                //Status = task.Status,
                 PlannedTerm = task.PlannedTerm,
-                ActualTerm = task.ActualTerm,
-                AssignedTo = task.AssignedTo,
+                //ActualTerm = task.ActualTerm,
             };
         }
 

@@ -30,13 +30,14 @@ namespace WebApplication1.Controllers
             try
             {
                 var newTask = await taskService.CreateTaskAsync(taskEntity);
-                return CreatedAtAction(nameof(GetTaskById), new { id = taskEntity.Id }, newTask);
+                return Ok(newTask);
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {

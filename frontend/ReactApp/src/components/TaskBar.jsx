@@ -1,7 +1,8 @@
 import "../styles/GanttChart.css"
 import { useState } from "react"
 import { removeTask } from "../api/tasksApi"
-function TaskBar({ task, startDate, onEdit }) {
+import { fetchTasks } from "../api/tasksApi"
+function TaskBar({ task, startDate, setTasks, onEdit }) {
     const [showOptions, setShowOptions] = useState(false);
     const startOffset =
         (new Date(task.plannedTerm.startDate) - new Date(startDate)) / (1000 * 60 * 60 * 24);
@@ -10,6 +11,23 @@ function TaskBar({ task, startDate, onEdit }) {
     const toggleOptions = () => {
         setShowOptions((prevState) => !prevState);
     };
+    const handleRemove = async () => {
+        try {
+            const response = await removeTask(task.id);
+            if (response.ok) {
+                console.log("Task removed successfully!");
+                const updatedTasks = await fetchTasks();
+                setTasks(updatedTasks);
+            } else {
+                console.error("Failed to remove task:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error while removing task:", error);
+        } finally {
+            setShowOptions(false);
+        }
+    };
+
     return (
         <div
             className={`gantt-bar ${task.status.toLowerCase().replace(" ", "-")}`}
@@ -22,7 +40,7 @@ function TaskBar({ task, startDate, onEdit }) {
             {showOptions && (
                 <div className="options-modal">
                     <button onClick={() => { onEdit(task); setShowOptions(false); }}>Edit</button>
-                    <button onClick={() => { removeTask(task.id); setShowOptions(false); }}>Remove</button>
+                    <button onClick={ handleRemove }>Remove</button>
                 </div>
             )}
         </div>

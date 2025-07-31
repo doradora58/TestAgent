@@ -2,7 +2,7 @@ import DateAxis from "./DateAxis";
 import TaskBar from "./TaskBar";
 import "../styles/GanttChart.css"
 
-function GanttChart({ tasks }) {
+function GanttChart({ tasks ,setTasks}) {
     const startDate = new Date(Math.min(...tasks.map(task => new Date(task.plannedTerm.startDate))));
     const endDate = new Date(Math.max(...tasks.map(task => new Date(task.plannedTerm.endDate))));
 
@@ -19,7 +19,7 @@ function GanttChart({ tasks }) {
             <DateAxis startDate={startDate} endDate={endDate} />
 
             {tasks.map(task => (
-                <TaskBar key={task.id} task={task} startDate={startDate} />
+                <TaskBar key={task.id} task={task} startDate={startDate} setTasks={setTasks} />
             ))}
         </div>
     );

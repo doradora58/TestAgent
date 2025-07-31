@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import TaskForm from "./TaskForm";
 import { createTask } from "../api/tasksApi"
+import { fetchTasks } from "../api/tasksApi"
 
-function CreateTask(){
+function CreateTask({setTasks }){
     const [showForm, setShowForm] = useState(false);
 
     const handleNewTaskClick = () => {
@@ -14,7 +15,8 @@ function CreateTask(){
         try {
             const response = await createTask(newTask);
             console.log("Task created:", response);
-            setShowForm(false);
+            const updatedTasks = await fetchTasks();
+            setTasks(updatedTasks);
         } catch (error) {
             console.error("Error creating task:", error);
         }
