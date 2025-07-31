@@ -8,7 +8,7 @@ function CreateTask({setTasks }){
     const [showForm, setShowForm] = useState(false);
 
     const handleNewTaskClick = () => {
-        setShowForm(true);
+        setShowForm(!showForm);
     };
 
     const handleTaskSubmit = async (newTask) => {
