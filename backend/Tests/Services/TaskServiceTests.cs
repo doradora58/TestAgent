@@ -1,12 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using WebApplication1.Repositories;
+﻿using Moq;
 using WebApplication1.Data;
 using WebApplication1.Models;
-using System.Collections.Generic;
-using System.Linq;
+using WebApplication1.Repositories;
 
-namespace WebApplication1.Tests.Repositories
+namespace Tests.Services
 {
     [TestClass]
     public class TaskRepositoryTests
