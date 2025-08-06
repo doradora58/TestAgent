@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: ./backend/Tests/TestResults.trx
+          path: ./backend/Tests/TestResults/TestResults.trx
   # This workflow contains a single job called "build"
   deploy-to-self-hosted:
     runs-on: self-hosted
