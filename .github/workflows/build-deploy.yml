@@ -41,7 +41,7 @@ jobs:
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
       - name: Generate HTML Report
-        run: reportgenerator -reports:./backend/Tests/TestResults/TestResults.trx -targetdir:TestReports -reporttypes:Html
+        run: reportgenerator -reports:./backend/Tests/TestResults/TestResults.trx -targetdir:./backend/Tests/TestReports -reporttypes:Html
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
