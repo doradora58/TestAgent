@@ -31,6 +31,18 @@ jobs:
       - name: Run Tests and Save Results
         run: dotnet test ./backend/Tests/Tests.csproj --logger "trx;LogFileName=TestResults.trx"
 
+      - name: Install ReportGenerator
+        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+      - name: Generate HTML Report
+        run: reportgenerator -reports:TestResults.trx -targetdir:TestReports -reporttypes:Html
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: ./backend/Tests/TestReports/
+
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
         with:
