@@ -1,13 +1,10 @@
-﻿using Microsoft.OpenApi.Extensions;
-using System.Threading.Tasks;
-using WebApplication1.Models;
+﻿using WebApplication1.Models;
 using WebApplication1.Repositories;
 
 namespace WebApplication1.Services
 {
     public class TaskService(ITaskRepository taskRepository) :ITaskService
     {
-        private int _currentId=1;
 
         public async Task<IEnumerable<TaskDto>> GetTasksAsync()
         {
