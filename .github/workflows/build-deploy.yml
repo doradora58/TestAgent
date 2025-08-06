@@ -29,8 +29,7 @@ jobs:
         working-directory: ./backend/Tests
       
       - name: Run Tests
-        run: dotnet test
-        working-directory: ./backend/Tests/Tests.csproj --verbosity normal
+        run: dotnet test ./backend/Tests/Tests.csproj --verbosity normal
         
   # This workflow contains a single job called "build"
   deploy-to-self-hosted:
