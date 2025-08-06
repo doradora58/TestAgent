@@ -38,7 +38,7 @@ jobs:
         run: reportgenerator -reports:TestResults.trx -targetdir:TestReports -reporttypes:Html
 
       - name: Upload HTML Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-reports
           path: ./backend/Tests/TestReports/
