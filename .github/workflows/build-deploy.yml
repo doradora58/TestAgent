@@ -30,6 +30,7 @@ jobs:
       
       - name: Run Tests
         run: dotnet test --no-build --verbosity normal
+        working-directory: ./backend/Tests
         
   # This workflow contains a single job called "build"
   deploy-to-self-hosted:
