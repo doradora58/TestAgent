@@ -1,4 +1,4 @@
-name: For docker
+name: Test and Deploy docker Workflow
 
 # Controls when the workflow will run
 on:
@@ -12,6 +12,24 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  dotnet-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'
+      
+      - name: Restore dependencies
+        run: dotnet restore
+      
+      - name: Run Tests
+        run: dotnet test --no-build --verbosity normal
+        
   # This workflow contains a single job called "build"
   deploy-to-self-hosted:
     runs-on: self-hosted
