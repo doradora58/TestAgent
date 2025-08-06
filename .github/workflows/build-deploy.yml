@@ -26,6 +26,7 @@ jobs:
       
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: ./backend/Tests
       
       - name: Run Tests
         run: dotnet test --no-build --verbosity normal
