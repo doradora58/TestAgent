@@ -56,29 +56,44 @@ jobs:
   #         name: test-reports
   #         path: ./backend/Tests/TestReports/*
 
-  labeler:
+  build-and-deploy:
     runs-on: self-hosted
-    permissions:
-      id-token: write
-      contents: read
-      pull-requests: write
 
     steps:
-      - uses: actions/labeler@v4
+      # リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          sync-labels: true
+          fetch-depth: 0
+
+      # GitVersionでバージョン番号を生成
+      - name: Setup GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        id: gitversion
+        with:
+          versionSpec: '5.x'
+
+      # Dockerビルドでバージョン番号を使う
+      - name: Build and Tag Docker Images
+        run: |
+          docker compose build \
+            --build-arg VERSION=${{ steps.gitversion.outputs.SemVer }}
+          docker tag webapi-image:latest webapi-image:${{ steps.gitversion.outputs.SemVer }}
+          docker tag react-image:latest react-image:${{ steps.gitversion.outputs.SemVer }}
+
+      # イメージをプッシュする
+      - name: Push Docker Images
+        run: |
+          docker push webapi-image:${{ steps.gitversion.outputs.SemVer }}
+          docker push react-image:${{ steps.gitversion.outputs.SemVer }}
   
   
-  deploy-to-self-hosted:
+  Run:
     runs-on: self-hosted
-    needs: labeler
+    needs: build-and-deploy
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Build
-        run: docker compose build --build-arg VERSION=${{ steps.gitversion.outputs.SemVer }}
         
       - name: Deploy with Docker Compose
         run: docker compose up -d
