@@ -77,9 +77,9 @@ jobs:
       - name: Build and Tag Docker Images
         run: |
           docker compose build \
-            --build-arg VERSION=${{ steps.gitversion.outputs.SemVer }}
-          docker tag webapi-image:latest webapi-image:${{ steps.gitversion.outputs.SemVer }}
-          docker tag react-image:latest react-image:${{ steps.gitversion.outputs.SemVer }}
+            --build-arg VERSION=${{ github.event.inputs.version }}
+          docker tag webapi-image:latest webapi-image:${{ github.event.inputs.version }}
+          docker tag react-image:latest react-image:${{ github.event.inputs.version }}
 
       # イメージをプッシュする
       - name: Push Docker Images
