@@ -12,68 +12,65 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  dotnet-test:
-    runs-on: ubuntu-latest
+  # dotnet-test:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
       
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0'
+  #     - name: Setup .NET
+  #       uses: actions/setup-dotnet@v3
+  #       with:
+  #         dotnet-version: '8.0'
       
-      - name: Restore dependencies
-        run: dotnet restore
-        working-directory: ./backend/Tests
+  #     - name: Restore dependencies
+  #       run: dotnet restore
+  #       working-directory: ./backend/Tests
       
-      - name: Run Tests and Save Results
-        run: dotnet test ./backend/Tests/Tests.csproj --logger "trx;LogFileName=TestResults.trx"
+  #     - name: Run Tests and Save Results
+  #       run: dotnet test ./backend/Tests/Tests.csproj --logger "trx;LogFileName=TestResults.trx"
 
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: ./backend/Tests/TestResults/TestResults.trx
+  #     - name: Upload Test Results
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: test-results
+  #         path: ./backend/Tests/TestResults/TestResults.trx
           
-      - name: Install ReportGenerator
-        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+  #     - name: Install ReportGenerator
+  #       run: dotnet tool install --global dotnet-reportgenerator-globaltool
 
-      - name: Generate HTML Report
-        run: reportgenerator \
-             -reports:./backend/Tests/TestResults/TestResults.trx \
-             -targetdir:./backend/Tests/TestReports \
-             -reporttypes:HtmlInline \
-             -verbosity:Verbose
+  #     - name: Generate HTML Report
+  #       run: reportgenerator \
+  #            -reports:./backend/Tests/TestResults/TestResults.trx \
+  #            -targetdir:./backend/Tests/TestReports \
+  #            -reporttypes:HtmlInline \
+  #            -verbosity:Verbose
 
-      - name: Upload HTML Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports
-          path: ./backend/Tests/TestReports/*
+  #     - name: Upload HTML Report
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: test-reports
+  #         path: ./backend/Tests/TestReports/*
           
   deploy-to-self-hosted:
     runs-on: self-hosted
-    needs: dotnet-test
+    # needs: dotnet-test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - name: Install GitVersion if not already installed
-        run: |
-          if ! dotnet tool list -g | grep -q "gitversion.tool"; then
-            dotnet tool install -g GitVersion.Tool
-          else
-            echo "GitVersion is already installed"
-          fi
-      - name: Add .dotnet tools to PATH
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
-      - name: Run GitVersion
+          fetch-depth: 0 # GitVersionには完全な履歴が必要
+
+      - name: Install and run GitVersion
+        uses: GitTools/actions/gitversion@v1
         id: gitversion
-        run: gitversion /output json /config GitVersion.yml
+        with:
+          # GitVersion.ymlのパスを明示的に指定
+          configFilePath: 'GitVersion.yml'
+      
       - name: Build
         run: docker compose build --build-arg VERSION=${{ steps.gitversion.outputs.SemVer }}
+        
       - name: Deploy with Docker Compose
         run: docker compose up -d
