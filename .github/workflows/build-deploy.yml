@@ -60,13 +60,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # GitVersionには完全な履歴が必要
+          fetch-depth: 0
 
       - name: Install and run GitVersion
-        uses: GitTools/actions/gitversion@v0.3.0
+        uses: GitTools/actions/gitversion@v1
         id: gitversion
         with:
-          # GitVersion.ymlのパスを明示的に指定
           configFilePath: 'GitVersion.yml'
       
       - name: Build
