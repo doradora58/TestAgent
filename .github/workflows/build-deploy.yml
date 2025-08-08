@@ -9,7 +9,10 @@ on:
     branches: [ "main", "development"]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+    inputs:
+      version:
+        description: 'Input version number'
+        required: true
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # dotnet-test:
@@ -52,26 +55,27 @@ jobs:
   #       with:
   #         name: test-reports
   #         path: ./backend/Tests/TestReports/*
-          
+
+  labeler:
+    runs-on: [self-hosted, prod]
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/labeler@v4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          sync-labels: true
+  
+  
   deploy-to-self-hosted:
     runs-on: self-hosted
     # needs: dotnet-test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Install GitVersion Tool
-        run: dotnet tool install --global GitVersion.Tool --version 5.x
-      
-      - name: Run GitVersion
-        run: gitversion /config GitVersion.yml
-
-      - name: Setup GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.7
-        id: gitversion
-        with:
-          configFilePath: 'GitVersion.yml'
       
       - name: Build
         run: docker compose build --build-arg VERSION=${{ steps.gitversion.outputs.SemVer }}
