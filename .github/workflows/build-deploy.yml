@@ -61,8 +61,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      # - name: Install GitVersion
-      #   run: dotnet tool install -g GitVersion.Tool
+      - name: Install GitVersion if not already installed
+        run: |
+          if ! command -v gitversion &> /dev/null; then
+            dotnet tool install -g GitVersion.Tool
+          else
+            echo "GitVersion is already installed"
+          fi
+      - name: Add .dotnet tools to PATH
+        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
       - name: Run GitVersion
         id: gitversion
         run: gitversion /output json /config GitVersion.yml
