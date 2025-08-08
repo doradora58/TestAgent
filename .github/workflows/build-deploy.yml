@@ -63,7 +63,7 @@ jobs:
           fetch-depth: 0 # GitVersionには完全な履歴が必要
 
       - name: Install and run GitVersion
-        uses: GitTools/actions/gitversion@v1
+        uses: GitTools/actions/gitversion@v0.3.0
         id: gitversion
         with:
           # GitVersion.ymlのパスを明示的に指定
