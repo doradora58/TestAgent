@@ -72,6 +72,15 @@ jobs:
         id: gitversion
         with:
           versionSpec: '5.x'
+          
+      - name: Check VERSION input
+        run: |
+          if [ -z "${{ github.event.inputs.version }}" ]; then
+            echo "VERSION is empty!"
+            exit 1
+          else
+            echo "VERSION is set to: ${{ github.event.inputs.version }}"
+          fi
 
       # Dockerビルドでバージョン番号を使う
       - name: Build and Tag Docker Images
