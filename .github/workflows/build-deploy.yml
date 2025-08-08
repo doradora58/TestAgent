@@ -84,8 +84,8 @@ jobs:
       # イメージをプッシュする
       - name: Push Docker Images
         run: |
-          docker push webapi-image:${{ steps.gitversion.outputs.SemVer }}
-          docker push react-image:${{ steps.gitversion.outputs.SemVer }}
+          docker push webapi-image:${{  github.event.inputs.version  }}
+          docker push react-image:${{  github.event.inputs.version  }}
   
   
   Run:
