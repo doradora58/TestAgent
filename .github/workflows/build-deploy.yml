@@ -62,8 +62,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install and run GitVersion
-        uses: GitTools/actions/gitversion@v1
+      - name: Setup GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
         id: gitversion
         with:
           configFilePath: 'GitVersion.yml'
