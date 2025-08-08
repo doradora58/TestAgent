@@ -63,7 +63,7 @@ jobs:
           fetch-depth: 0
       - name: Install GitVersion if not already installed
         run: |
-          if ! command -v gitversion &> /dev/null; then
+          if ! dotnet tool list -g | grep -q "gitversion.tool"; then
             dotnet tool install -g GitVersion.Tool
           else
             echo "GitVersion is already installed"
