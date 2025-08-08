@@ -10,6 +10,7 @@ RUN npm install
 
 # ソースコードをコピーしてアプリをビルド
 COPY . .
+ENV APP_VERSION=$VERSION
 RUN npm run build
 
 # 軽量なNginxイメージを使ってビルド結果を配信
