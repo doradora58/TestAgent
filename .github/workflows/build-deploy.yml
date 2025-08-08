@@ -52,7 +52,7 @@ jobs:
         with:
           name: test-reports
           path: ./backend/Tests/TestReports/*
-
+          
   deploy-to-self-hosted:
     runs-on: self-hosted
     needs: dotnet-test
@@ -68,6 +68,5 @@ jobs:
         run: gitversion /output json /config GitVersion.yml
       - name: Build
         run: docker compose build --build-arg VERSION=${{ steps.gitversion.outputs.SemVer }}
-    - name: Deploy with Docker Compose
-      run: docker compose up 
+      - name: Deploy with Docker Compose
         run: docker compose up -d
