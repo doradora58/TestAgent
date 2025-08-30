@@ -70,17 +70,7 @@ jobs:
       # Dockerビルドでバージョン番号を使う
       - name: Build and Tag Docker Images
         run: |
-          docker compose build \
-            --build-arg VERSION=${{ github.event.inputs.version }}
-          docker tag webapi-image:latest webapi-image:${{ github.event.inputs.version }}
-          docker tag react-image:latest react-image:${{ github.event.inputs.version }}
-
-      # イメージをプッシュする
-      - name: Push Docker Images
-        run: |
-          docker push webapi-image:${{  github.event.inputs.version  }}
-          docker push react-image:${{  github.event.inputs.version  }}
-  
+          docker compose build  
   
   Run:
     runs-on: self-hosted
