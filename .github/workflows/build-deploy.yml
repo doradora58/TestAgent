@@ -9,59 +9,100 @@ on:
     branches: [ "main", "development"]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+    inputs:
+      version:
+        description: 'Input version number'
+        required: true
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  dotnet-test:
-    runs-on: ubuntu-latest
+  # dotnet-test:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+      
+  #     - name: Setup .NET
+  #       uses: actions/setup-dotnet@v3
+  #       with:
+  #         dotnet-version: '8.0'
+      
+  #     - name: Restore dependencies
+  #       run: dotnet restore
+  #       working-directory: ./backend/Tests
+      
+  #     - name: Run Tests and Save Results
+  #       run: dotnet test ./backend/Tests/Tests.csproj --logger "trx;LogFileName=TestResults.trx"
+
+  #     - name: Upload Test Results
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: test-results
+  #         path: ./backend/Tests/TestResults/TestResults.trx
+          
+  #     - name: Install ReportGenerator
+  #       run: dotnet tool install --global dotnet-reportgenerator-globaltool
+
+  #     - name: Generate HTML Report
+  #       run: reportgenerator \
+  #            -reports:./backend/Tests/TestResults/TestResults.trx \
+  #            -targetdir:./backend/Tests/TestReports \
+  #            -reporttypes:HtmlInline \
+  #            -verbosity:Verbose
+
+  #     - name: Upload HTML Report
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: test-reports
+  #         path: ./backend/Tests/TestReports/*
+
+  build-and-deploy:
+    runs-on: self-hosted
 
     steps:
+      # リポジトリをチェックアウト
       - name: Checkout repository
-        uses: actions/checkout@v3
-      
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/checkout@v4
         with:
-          dotnet-version: '8.0'
-      
-      - name: Restore dependencies
-        run: dotnet restore
-        working-directory: ./backend/Tests
-      
-      - name: Run Tests and Save Results
-        run: dotnet test ./backend/Tests/Tests.csproj --logger "trx;LogFileName=TestResults.trx"
+          fetch-depth: 0
 
-      - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+      # GitVersionでバージョン番号を生成
+      - name: Setup GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.7
+        id: gitversion
         with:
-          name: test-results
-          path: ./backend/Tests/TestResults/TestResults.trx
+          versionSpec: '5.x'
           
-      - name: Install ReportGenerator
-        run: dotnet tool install --global dotnet-reportgenerator-globaltool
+      - name: Check VERSION input
+        run: |
+          if [ -z "${{ github.event.inputs.version }}" ]; then
+            echo "VERSION is empty!"
+            exit 1
+          else
+            echo "VERSION is set to: ${{ github.event.inputs.version }}"
+          fi
 
-      - name: Generate HTML Report
-        run: reportgenerator \
-             -reports:./backend/Tests/TestResults/TestResults.trx \
-             -targetdir:./backend/Tests/TestReports \
-             -reporttypes:HtmlInline \
-             -verbosity:Verbose
+      # Dockerビルドでバージョン番号を使う
+      - name: Build and Tag Docker Images
+        run: |
+          docker compose build \
+            --build-arg VERSION=${{ github.event.inputs.version }}
+          docker tag webapi-image:latest webapi-image:${{ github.event.inputs.version }}
+          docker tag react-image:latest react-image:${{ github.event.inputs.version }}
 
-      - name: Upload HTML Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports
-          path: ./backend/Tests/TestReports/*
-
-  # This workflow contains a single job called "build"
-  deploy-to-self-hosted:
+      # イメージをプッシュする
+      - name: Push Docker Images
+        run: |
+          docker push webapi-image:${{  github.event.inputs.version  }}
+          docker push react-image:${{  github.event.inputs.version  }}
+  
+  
+  Run:
     runs-on: self-hosted
-    needs: dotnet-test
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    needs: build-and-deploy
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build 
-        run: docker compose build
+        
       - name: Deploy with Docker Compose
         run: docker compose up -d
