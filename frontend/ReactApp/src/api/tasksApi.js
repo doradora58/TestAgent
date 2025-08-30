@@ -1,13 +1,14 @@
 import BASE_URL from "../config";
 export async function fetchTasks() {
-    const response = await fetch(BASE_URL+"/Tasks", {
+    console.log(" BASE_URL=" + BASE_URL);
+    const response = await fetch(BASE_URL + "/Tasks", {
         headers: {
             "Content-Type": "application/json",
             "Accept": "*/*",
         },
     });
     if (!response.ok) {
-        throw new Error("Failed to fetch tasks");
+        throw new Error("Failed to fetch tasks" + " BASE_URL="+BASE_URL);
     }
     return response.json();
 }
