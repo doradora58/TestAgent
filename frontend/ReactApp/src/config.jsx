@@ -1,5 +1,3 @@
-const BASE_URL = window.location.hostname === "localhost"
-    ? "http://localhost:50000"
-    : "http://100.90.217.39:50000";
+const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
 export default BASE_URL;
