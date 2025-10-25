@@ -71,7 +71,7 @@ jobs:
       # Dockerビルドでバージョン番号を使う
       - name: Build and Tag Docker Images
         run: |
-          docker compose build  
+          sudo docker compose build  
   
   Run:
     runs-on: self-hosted
