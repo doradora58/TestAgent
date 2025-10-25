@@ -26,7 +26,7 @@ services:
       - NODE_ENV=production
     restart: always
 
-    my-portal:
+  my-portal:
     build:
       context: ./frontend/my-portal
       dockerfile: Dockerfile
