@@ -26,19 +26,19 @@ services:
       - NODE_ENV=production
     restart: always
 
-  my-portal:
-    build:
-      context: ./frontend/my-portal
-      dockerfile: Dockerfile
-    image: my-portal:latest
-    container_name: my-portal
-    ports:
-      - "60000:60000"    
-    volumes:
-      - .:/app
-    environment:
-      - NODE_ENV=production
-    restart: always
+  # my-portal:
+  #   build:
+  #     context: ./frontend/my-portal
+  #     dockerfile: Dockerfile
+  #   image: my-portal:latest
+  #   container_name: my-portal
+  #   ports:
+  #     - "60000:60000"    
+  #   volumes:
+  #     - .:/app
+  #   environment:
+  #     - NODE_ENV=production
+  #   restart: always
 
   nginx:
     image: nginx:latest
