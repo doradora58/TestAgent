@@ -18,7 +18,7 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
 # 必要に応じてポートを公開
-EXPOSE 60000
+EXPOSE 80
 
 # デフォルトのNginx実行コマンド
 CMD ["nginx", "-g", "daemon off;"]
